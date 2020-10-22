@@ -22,5 +22,5 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body_path: temp_release_notes/*.md
+        body_path: temp_release_notes # Milestone_1.0.md
         draft: true
