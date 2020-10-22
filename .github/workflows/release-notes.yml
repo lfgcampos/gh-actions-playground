@@ -11,20 +11,20 @@ jobs:
     - name: Create Release Notes Markdown
       uses: docker://decathlon/release-notes-generator-action:2.0.1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         OUTPUT_FOLDER: temp_release_notes
         USE_MILESTONE_TITLE: "true"
-    - name: Get the name of the created Release Notes
+    - name: Get the name of the created Release Notes file
       run: |
         RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
-        echo ::set-env name=RELEASE_NOTES_FILE::${RELEASE_NOTES_FILE}
+        echo "RELEASE_NOTES_FILE=RELEASE_NOTES_FILE" >> $GITHUB_ENV
     - name: Create Release Notes on GitHub
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body_path: ${{ env.RELEASE_NOTES_FILE }} # Milestone_1.0.md
+        tag_name: ${{ github.event.milestone.title }}
+        release_name:  ${{ github.event.repository.name }} ${{ github.event.milestone.title }}
+        body_path: ${{ env.RELEASE_NOTES_FILE }}
         draft: true
