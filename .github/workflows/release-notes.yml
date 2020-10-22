@@ -17,7 +17,7 @@ jobs:
     - name: Get the name of the created Release Notes file
       run: |
         RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
-        echo "$RELEASE_NOTES_FILE=RELEASE_NOTES_FILE" >> $GITHUB_ENV
+        echo "RELEASE_NOTES_FILE=$RELEASE_NOTES_FILE" >> $GITHUB_ENV
     - name: Create Release Notes on GitHub
       id: create_release
       uses: actions/create-release@v1
