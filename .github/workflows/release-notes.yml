@@ -14,6 +14,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         OUTPUT_FOLDER: temp_release_notes
         USE_MILESTONE_TITLE: "true"
+    - name: Get the name of the created Release Notes
+      run: |
+        RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
     - name: Create Release Notes on GitHub
       id: create_release
       uses: actions/create-release@v1
@@ -22,5 +25,5 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }}
-        body_path: temp_release_notes # Milestone_1.0.md
+        body_path: temp_release_notes/RELEASE_NOTES_FILE # Milestone_1.0.md
         draft: true
