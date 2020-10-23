@@ -1,4 +1,5 @@
 changelog:
+  repository: lfgcampos/gh-actions-playground
   sections:
   - title: ":star: Features"
     labels: ["Type: Feature"]
