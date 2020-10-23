@@ -18,13 +18,15 @@ jobs:
       run: |
         RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
         echo "RELEASE_NOTES_FILE=$RELEASE_NOTES_FILE" >> $GITHUB_ENV
+        VERSION=$(echo ${{ github.event.milestone.title }} | cut -d' ' -f2)
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
     - name: Create Release Notes on GitHub
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ github.event.milestone.title }}
-        release_name:  ${{ github.event.repository.name }} ${{ github.event.milestone.title }}
+        tag_name: join ('v', ${{ env.VERSION }})
+        release_name:  ${{ github.event.repository.name }} join ('v', ${{ env.VERSION }})
         body_path: ${{ env.RELEASE_NOTES_FILE }}
         draft: true
