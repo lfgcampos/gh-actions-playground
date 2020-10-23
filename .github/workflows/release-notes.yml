@@ -14,14 +14,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         OUTPUT_FOLDER: temp_release_notes
         USE_MILESTONE_TITLE: "true"
-    - name: Get the name of the created Release Notes file
+    - name: Get the name of the created Release Notes file and extract Version
       run: |
         RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
         echo "RELEASE_NOTES_FILE=$RELEASE_NOTES_FILE" >> $GITHUB_ENV
         VERSION="v"
         VERSION+=$(echo ${{ github.event.milestone.title }} | cut -d' ' -f2)
         echo "VERSION=$VERSION" >> $GITHUB_ENV
-    - name: Create Release Notes on GitHub
+    - name: Create a Draft Release Notes on GitHub
       id: create_release
       uses: actions/create-release@v1
       env:
