@@ -14,7 +14,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         OUTPUT_FOLDER: temp_release_notes
         USE_MILESTONE_TITLE: "true"
-        CONFIG_FILE: ".github/release-notes.yml"
+        CONFIG_FILE: "classpath:/.github/release-notes.yml"
     - name: Get the name of the created Release Notes file
       run: |
         RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
