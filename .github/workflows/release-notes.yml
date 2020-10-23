@@ -9,12 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Create Release Notes Markdown
-      uses: docker://decathlon/release-notes-generator-action:2.0.1
+      uses: docker://decathlon/release-notes-generator-action:2.1.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         OUTPUT_FOLDER: temp_release_notes
         USE_MILESTONE_TITLE: "true"
-        CONFIG_FILE: "release-notes.yml"
     - name: Get the name of the created Release Notes file
       run: |
         RELEASE_NOTES_FILE=$(ls temp_release_notes/*.md | head -n 1)
